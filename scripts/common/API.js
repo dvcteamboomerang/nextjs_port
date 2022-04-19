@@ -10,6 +10,7 @@ const {
   auth,
   signInWithGooglePopUp,
 } = AuthService;
+
 export async function signUp(email, password) {
   // Create user with email and pass.
   const status = await createUserWithEmailAndPassword(auth, email, password)
@@ -39,10 +40,12 @@ export async function signUp(email, password) {
 export async function signInWithGoogle() {
   signInWithGooglePopUp();
 }
+
 export async function signIn(email, password) {
   let status = await signInWithEmailAndPassword(auth, email, password)
     .then((userCredential) => {
       // Signed in
+      console.log("Successfully signed in!");
       status = { user: userCredential.user };
       return status;
     })
@@ -84,10 +87,6 @@ export async function signIn(email, password) {
 //     });
 //     return status;
 // }
-
-// /**
-//  * Handles the sign in button press.
-//  */
 
 // ————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————
 

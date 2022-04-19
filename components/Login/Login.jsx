@@ -92,7 +92,7 @@ function LogInSignUpToggle({ LogIn, SignUp, changeFormStatus }) {
         changeFormStatus(true);
       }}
     >
-      Logging In?
+      Signing Up?
     </p>
   ) : (
     <p
@@ -101,7 +101,7 @@ function LogInSignUpToggle({ LogIn, SignUp, changeFormStatus }) {
         changeFormStatus(false);
       }}
     >
-      Signing Up?
+      Logging In?
     </p>
   );
 
