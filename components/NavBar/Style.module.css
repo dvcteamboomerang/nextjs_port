@@ -1,0 +1,62 @@
+.NavBar {
+  height: 4rem;
+  font-family: Fredoka;
+  display: flex;
+  padding-left: 5%;
+  padding-right: 5%;
+  position: relative;
+  justify-content: space-between;
+  width: 100vw;
+  align-items: center;
+}
+
+.navBarLinks > ul {
+  float: right;
+  padding-inline: 2.25rem;
+}
+.SiteLogo {
+  position: relative;
+  height: 3rem;
+  width: 3em;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  backdrop-filter: blur(24px);
+}
+.navBarLinks {
+  display: block;
+  position: relative;
+  padding-bottom: 0.35rem;
+  color: white;
+  text-decoration: none;
+}
+
+.navBarLinks::before {
+  content: "";
+  position: absolute;
+  display: block;
+  width: 100%;
+  height: 0.15rem;
+  bottom: 0;
+  left: 0;
+  background-color: white;
+  transform: scaleX(0);
+  transition: transform 0.3s ease;
+  border-radius: 25px;
+}
+
+.navBarLinks:hover:before {
+  transform: scaleX(1);
+}
+.WebsiteTitle {
+  color: white;
+  padding-left: 1rem;
+  pointer-events: none;
+  font-size: 2rem;
+  margin: 0;
+}
+@media screen and (max-width: 720px) {
+  .navBarLinks {
+    display: none;
+  }
+}
