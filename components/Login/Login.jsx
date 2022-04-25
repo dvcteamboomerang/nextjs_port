@@ -4,48 +4,118 @@ import {
   sendPasswordReset,
   signInWithGoogle,
 } from "../../scripts/common/API";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import style from "./Style.module.css";
 import { useRouter } from "next/router";
 function AccountHandler({ emphasis }) {
-  const [isSigningUp, changeFormStatus] = useState(false);
-  let ComponentToShow = isSigningUp ? SignUpForm : LoginForm;
+  const [signingUpStatus, isSigningUp] = useState(false);
+  let ComponentToShow = signingUpStatus ? SignUpForm : LoginForm;
   return (
     <div
       className={
         style["account_handler_container"] + " center theme_background"
       }
     >
-      <ComponentToShow changeFormStatus={changeFormStatus} />
+      <ComponentToShow isSigningUp={isSigningUp} />
     </div>
   );
 }
 
-function LoginForm({ emphasis, changeFormStatus }) {
+function LoginForm({ emphasis, isSigningUp }) {
+  const router = useRouter();
+  const [error, setError] = useState(null);
+
   return (
     <>
       <h1 className={style["login-title"]}>Login</h1>
-      <Input title="Username" />
-      <Input title="Password" />
-      {/* <Input title="PasswordVeri" /> */}
+      <Input title="Email" />
+      <Input title="Password" private />
+      <PopUpAlert error={error} style={style} setError={setError} />
       <RememberMe />
       <Button
         id="User Login"
         title="Log in"
-        onClick={() =>
-          signIn(
-            document.getElementById("Username").value,
-            document.getElementById("Password").value
-          )
-        }
+        onClick={async () => {
+          let email = document.getElementById("Email").value;
+          let password = document.getElementById("Password").value;
+          let status = await signIn(email, password);
+
+          let { error, user } = status;
+          if (error) {
+            setError(error);
+          } else if (user) {
+            router.push("/userPage");
+          }
+        }}
       />
-      <LogInSignUpToggle LogIn changeFormStatus={changeFormStatus} />
+      <SignInWithGoogle />
+      <LogInSignUpToggle LogIn isSigningUp={isSigningUp} />
       {/*The button did not need anything in it, hence it is an "empty" html element*/}
     </>
   );
 }
 
-function SignUpForm({ changeFormStatus }) {
+const PopUpAlert = ({ error, setError, style }) => {
+  let message = error;
+  useEffect(() => {
+    console.log("rerender");
+    let debounce = true;
+    const onMouseMove = (event) => {
+      let mouse = { clientX: event.clientX, clientY: event.clientY };
+      let Alert = document.getElementsByClassName(style["DisplayAlert"])[0];
+      if (message && Alert) {
+        Alert.style.top = mouse.clientY + "px";
+        Alert.style.left = mouse.clientX + "px";
+        if (debounce) {
+          Alert.style.opacity = 1.0;
+          debounce = false;
+          setTimeout(
+            () => {
+              setTimeout(
+                () => {
+                  Alert.style.opacity = 0;
+
+                  setTimeout(
+                    () => {
+                      if (message && mouse.clientX && mouse.clientY) {
+                        message = null;
+                        setError(null);
+                      }
+                      debounce = false;
+                    },
+                    2000,
+                    style,
+                    mouse,
+                    message,
+                    setError
+                  );
+                },
+                2000,
+                style,
+                mouse,
+                message,
+                setError
+              );
+            },
+            2000,
+            style,
+            mouse,
+            message,
+            setError
+          );
+        }
+      }
+    };
+    document.addEventListener("mousemove", onMouseMove);
+  }, [style, error, setError]);
+  return message ? (
+    <p on className={style["DisplayAlert"]}>
+      {message}
+    </p>
+  ) : null;
+};
+
+function SignUpForm({ isSigningUp }) {
   const router = useRouter();
   const [error, setError] = useState(null);
   console.log(error);
@@ -57,7 +127,7 @@ function SignUpForm({ changeFormStatus }) {
       <Input title="Email" />
       <Input title="Password" private />
       <Input title="Verify Password" private />
-      {error ? <p className={style["DisplayError"]}>{error}</p> : null}
+      <PopUpAlert error={error} style={style} setError={setError} />
       <Button
         private
         id="User Create"
@@ -80,16 +150,16 @@ function SignUpForm({ changeFormStatus }) {
         }}
       />
       <SignInWithGoogle />
-      <LogInSignUpToggle SignUp changeFormStatus={changeFormStatus} />
+      <LogInSignUpToggle SignUp isSigningUp={isSigningUp} />
     </>
   );
 }
-function LogInSignUpToggle({ LogIn, SignUp, changeFormStatus }) {
+function LogInSignUpToggle({ LogIn, SignUp, isSigningUp }) {
   const display = LogIn ? (
     <p
       style={{ cursor: "pointer", color: "white" }}
       onClick={() => {
-        changeFormStatus(true);
+        isSigningUp(true);
       }}
     >
       Signing Up?
@@ -98,7 +168,7 @@ function LogInSignUpToggle({ LogIn, SignUp, changeFormStatus }) {
     <p
       style={{ cursor: "pointer", color: "white" }}
       onClick={() => {
-        changeFormStatus(false);
+        isSigningUp(false);
       }}
     >
       Logging In?
@@ -108,11 +178,17 @@ function LogInSignUpToggle({ LogIn, SignUp, changeFormStatus }) {
   return display;
 }
 function SignInWithGoogle() {
+  const router = useRouter();
   return (
     <div>
       <img
-        onClick={() => {
-          signInWithGoogle();
+        onClick={async () => {
+          let { error, user } = await signInWithGoogle();
+          if (error && setError) {
+            setError(error);
+          } else {
+            router.push("/userPage");
+          }
         }}
         style={{ cursor: "pointer", color: "white" }}
         className="signInWithGoogle"

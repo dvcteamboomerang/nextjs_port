@@ -1,7 +1,11 @@
 import Head from "next/head";
+import { useState } from "react";
+import AddEvent from "../components/AddEvent/AddEvent";
+import AddItem from "../components/AddItem/AddItem";
 import styles from "../styles/Home.module.css";
 
 export default function Home() {
+  const [isShowingForm, showForm] = useState(false);
   return (
     <div className={styles.container}>
       <Head>
@@ -16,7 +20,10 @@ export default function Home() {
         />
       </Head>
 
-      <main className={styles.main}></main>
+      <main className={styles.main}>
+        <AddItem showForm={showForm} />
+        {isShowingForm ? <AddEvent showForm={showForm} /> : null}
+      </main>
 
       <footer className={styles.footer}></footer>
     </div>

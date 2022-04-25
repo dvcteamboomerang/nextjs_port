@@ -23,3 +23,7 @@ check_string.password = function (password) {
 
   return status;
 };
+
+export function type(object) {
+  return object.constructor.name;
+}

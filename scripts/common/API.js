@@ -1,62 +1,37 @@
 import AuthService from "../Firebase/authentication";
 
 const {
-  signInWithEmailAndPassword,
-  createUserWithEmailAndPassword,
+  signUpWithFirebase,
+  signInWithFirebase,
+  signInGoogleWithFirebase,
   onAuthStateChanged,
   sendPasswordResetEmail,
   updateProfile,
   currentUser,
-  auth,
-  signInWithGooglePopUp,
+  isLoggedInFirebase,
+  signOutFirebase,
 } = AuthService;
 
 export async function signUp(email, password) {
   // Create user with email and pass.
-  const status = await createUserWithEmailAndPassword(auth, email, password)
-    .then((userCredential) => {
-      // Signed in
-      status = { user: userCredential.user };
-      return status;
-    })
-    .catch(function (error) {
-      // Handle Errors here.
-
-      const errorMessage = (code) => {
-        switch (code) {
-          case "auth/email-already-in-use":
-            return "You are already a member silly!";
-          default:
-            return "Unknown error.";
-        }
-      };
-      status = { error: errorMessage(error.code) };
-      return status;
-    });
-
+  const status = await signUpWithFirebase(email, password);
   return status;
 }
 
 export async function signInWithGoogle() {
-  signInWithGooglePopUp();
+  return await signInGoogleWithFirebase();
 }
 
 export async function signIn(email, password) {
-  let status = await signInWithEmailAndPassword(auth, email, password)
-    .then((userCredential) => {
-      // Signed in
-      console.log("Successfully signed in!");
-      status = { user: userCredential.user };
-      return status;
-    })
-    .catch(function (error) {
-      // Handle Errors here.
-      status = { error: error };
-      return status;
-    });
+  let status = await signInWithFirebase(email, password);
   return status;
 }
-
+export async function checkIfLoggedIn(changeState, elseState) {
+  isLoggedInFirebase((user) => {
+    changeState(user);
+    if (!user) elseState();
+  });
+}
 // /**
 //  * Sends an email verification to the user.
 //  */
@@ -91,10 +66,8 @@ export async function signIn(email, password) {
 // ————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————
 
 //Sign out
-function signOut() {
-  let status;
-
-  return status;
+export async function signOut() {
+  await signOutFirebase();
 }
 
 //Create strong password

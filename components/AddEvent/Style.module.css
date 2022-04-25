@@ -1,0 +1,61 @@
+.createItem {
+  display: flex;
+  flex-direction: column;
+  background-color: green;
+  color: white;
+  padding: 3rem;
+  border-radius: 25px;
+  position: fixed;
+  z-index: 4;
+}
+
+.overlay {
+  position: fixed;
+  z-index: 0;
+  height: 100vh;
+  width: 100vw;
+  background-color: rgba(1, 1, 1, 0.5);
+  top: 0;
+  left: 0;
+  backdrop-filter: blur(2px);
+}
+
+.close {
+  background-color: red;
+  position: absolute;
+  color: white;
+  font-weight: 600;
+  font-size: 2rem;
+  padding-bottom: 0.4rem;
+  border-radius: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 2.5rem;
+  width: 2.5rem;
+  border: none;
+  right: 1rem;
+  top: 1rem;
+  transition: height 200ms ease, width 200ms ease;
+  cursor: pointer;
+}
+
+.close:hover {
+  height: 3rem;
+  width: 3rem;
+  top: 1rem;
+  right: 1rem;
+}
+
+.formType {
+  height: 3rem;
+  width: 3rem;
+  cursor: pointer;
+  opacity: 1;
+  transition: opacity 100ms ease;
+  filter: invert();
+}
+
+.formType:hover {
+  opacity: 0.5;
+}

@@ -1,10 +1,9 @@
 import { useEffect, useState } from "react";
 import is_sensitive from "../../scripts/Tensorflow/Toxicity";
-
+import TextField from "@mui/material/TextField";
 const Form = ({ fields }) => {
   const [{ is_read, message_status }, use_state] = useState({
     is_read: 0,
-    message_status: "Create a new post",
   });
   const Fields = Object.entries(fields).map(([field_name, field_attribute]) => {
     return (
@@ -37,15 +36,6 @@ const Form = ({ fields }) => {
     <div>
       <p style={{ color: is_read === 2 ? "red" : "black" }}>{message_status}</p>
       {Fields}
-      <button
-        onClick={() => {
-          if (is_read === 0) {
-            use_state({ is_read: 1, message_status: "Reading Post" });
-          }
-        }}
-      >
-        Post
-      </button>
     </div>
   );
 };
@@ -55,11 +45,12 @@ const Field = ({ title, textarea }) => {
   return (
     <div>
       <h2>{title}</h2>
-      {!textarea ? (
-        <input className={"input_field"} id={title + "_input"} />
-      ) : (
-        <textarea className={"input_field"} id={title + "_input"} />
-      )}
+      <TextField
+        id="outlined-textarea"
+        label={title}
+        placeholder="Placeholder"
+        multiline={textarea}
+      />
     </div>
   );
 };

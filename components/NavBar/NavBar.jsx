@@ -1,11 +1,17 @@
 import React from "react";
+import { signOut } from "../../scripts/common/API";
 import style from "./Style.module.css";
+
+import { useRouter } from "next/router";
 export default function NavBar({ user }) {
+  console.log(user);
   return (
     <nav className={style.NavBar + " theme_background"}>
       <WebsiteInfo />
       <NavBarLinks />
-      {user ? <UserInfo /> : null}
+      {user ? (
+        <UserInfo imgLink={user.photoURL} username={user.displayName} />
+      ) : null}
     </nav>
   );
 }
@@ -48,17 +54,43 @@ function NavBarLinks() {
   );
 }
 
-function UserInfo() {
+function UserInfo({ imgLink, username }) {
   return (
-    <div className={style.UserInfoContainer} style={{ display: "flex" }}>
-      <UserIcon />
-      <UserNameTag />
+    <div className={style.userInfoContainer} style={{ display: "flex" }}>
+      <UserIcon imgLink={imgLink} />
+      <UserNameTag username={username} />
+      <SignOut />
     </div>
   );
 }
 function UserIcon({ imgLink }) {
-  return <img src={imgLink}></img>;
+  console.log(imgLink);
+  return imgLink ? (
+    <img
+      className={style["userIcon"]}
+      onError={({ target }) => {
+        console.log(target);
+        target.style.display = "none";
+      }}
+      src={imgLink}
+    />
+  ) : null;
 }
-function UserNameTag(username) {
-  return <h1>{username}</h1>;
+function UserNameTag({ username }) {
+  return <h1 className={style["usernameTag"]}>{username}</h1>;
+}
+function SignOut() {
+  const router = useRouter();
+  return (
+    <p
+      className={style.navBarLinks}
+      onClick={() => {
+        if (signOut()) {
+          router.push("/");
+        }
+      }}
+    >
+      Sign Out
+    </p>
+  );
 }
