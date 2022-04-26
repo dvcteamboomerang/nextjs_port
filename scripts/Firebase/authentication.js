@@ -7,7 +7,6 @@ import {
   signInWithEmailAndPassword,
   createUserWithEmailAndPassword,
   signOut,
-  onAuthStateChanged,
 } from "firebase/auth";
 import * as FirebaseAuthService from "firebase/auth";
 
@@ -125,6 +124,11 @@ interpret.Error = (error) => {
   }
 };
 
+let getCurrentFirebaseUser = async () => {
+  const auth = await getAuth();
+  return await auth.currentUser;
+};
+
 let signOutFirebase = async () => {
   const auth = getAuth();
   await signOut(auth);
@@ -137,6 +141,7 @@ let AuthService = {
   isLoggedInFirebase,
   signOutFirebase,
   auth,
+  getCurrentFirebaseUser,
 };
 
 export default AuthService;

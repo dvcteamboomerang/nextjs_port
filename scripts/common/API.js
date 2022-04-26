@@ -10,16 +10,45 @@ const {
   currentUser,
   isLoggedInFirebase,
   signOutFirebase,
+  getCurrentFirebaseUser,
 } = AuthService;
 
 export async function signUp(email, password) {
   // Create user with email and pass.
   const status = await signUpWithFirebase(email, password);
-  return status;
+  const { user, error } = status;
+  if (user) {
+    const { uid, accessToken } = user;
+    let response = fetch("http://localhost:3000/api/newUser", {
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+      method: "POST",
+      body: JSON.stringify({ uid: uid }),
+    }).then((res) => res.json());
+  } else if (error) {
+    return status;
+  }
+  if (response.success) return status;
+  else return { error: "Technical issue DB01" };
 }
 
 export async function signInWithGoogle() {
-  return await signInGoogleWithFirebase();
+  const status = await signInGoogleWithFirebase();
+  const { user } = status;
+  const { uid, accessToken } = user;
+  let response = fetch("http://localhost:3000/api/newUser", {
+    headers: {
+      Accept: "application/json",
+      "Content-Type": "application/json",
+    },
+    method: "POST",
+    body: JSON.stringify({ uid: uid }),
+  }).then((res) => res.json());
+  console.log(response);
+  if (response.success) return status;
+  else return { error: "Technical issue DB01" };
 }
 
 export async function signIn(email, password) {
@@ -31,6 +60,10 @@ export async function checkIfLoggedIn(changeState, elseState) {
     changeState(user);
     if (!user) elseState();
   });
+}
+
+export async function getCurrentUser() {
+  return await getCurrentFirebaseUser();
 }
 // /**
 //  * Sends an email verification to the user.

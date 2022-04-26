@@ -4,6 +4,7 @@ import {
   sendPasswordReset,
   signInWithGoogle,
 } from "../../scripts/common/API";
+import PopUpAlert from "../PopUpAlert/PopUpAlert";
 import { useEffect, useState } from "react";
 import style from "./Style.module.css";
 import { useRouter } from "next/router";
@@ -55,70 +56,9 @@ function LoginForm({ emphasis, isSigningUp }) {
   );
 }
 
-const PopUpAlert = ({ error, setError, style }) => {
-  let message = error;
-  useEffect(() => {
-    console.log("rerender");
-    let debounce = true;
-    const onMouseMove = (event) => {
-      let mouse = { clientX: event.clientX, clientY: event.clientY };
-      let Alert = document.getElementsByClassName(style["DisplayAlert"])[0];
-      if (message && Alert) {
-        Alert.style.top = mouse.clientY + "px";
-        Alert.style.left = mouse.clientX + "px";
-        if (debounce) {
-          Alert.style.opacity = 1.0;
-          debounce = false;
-          setTimeout(
-            () => {
-              setTimeout(
-                () => {
-                  Alert.style.opacity = 0;
-
-                  setTimeout(
-                    () => {
-                      if (message && mouse.clientX && mouse.clientY) {
-                        message = null;
-                        setError(null);
-                      }
-                      debounce = false;
-                    },
-                    2000,
-                    style,
-                    mouse,
-                    message,
-                    setError
-                  );
-                },
-                2000,
-                style,
-                mouse,
-                message,
-                setError
-              );
-            },
-            2000,
-            style,
-            mouse,
-            message,
-            setError
-          );
-        }
-      }
-    };
-    document.addEventListener("mousemove", onMouseMove);
-  }, [style, error, setError]);
-  return message ? (
-    <p on className={style["DisplayAlert"]}>
-      {message}
-    </p>
-  ) : null;
-};
-
 function SignUpForm({ isSigningUp }) {
   const router = useRouter();
   const [error, setError] = useState(null);
-  console.log(error);
   return (
     <>
       <h1 className={style["login-title"]}>Sign Up</h1>
@@ -149,7 +89,7 @@ function SignUpForm({ isSigningUp }) {
           }
         }}
       />
-      <SignInWithGoogle />
+      <SignInWithGoogle setError={setError} />
       <LogInSignUpToggle SignUp isSigningUp={isSigningUp} />
     </>
   );
@@ -177,7 +117,7 @@ function LogInSignUpToggle({ LogIn, SignUp, isSigningUp }) {
 
   return display;
 }
-function SignInWithGoogle() {
+function SignInWithGoogle({ setError }) {
   const router = useRouter();
   return (
     <div>

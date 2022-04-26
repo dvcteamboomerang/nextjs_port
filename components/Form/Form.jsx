@@ -46,7 +46,7 @@ const Field = ({ title, textarea }) => {
     <div>
       <h2>{title}</h2>
       <TextField
-        id="outlined-textarea"
+        id={title}
         label={title}
         placeholder="Placeholder"
         multiline={textarea}
