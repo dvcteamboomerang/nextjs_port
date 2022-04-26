@@ -22,8 +22,14 @@ export default function Home() {
       </Head>
 
       <main className={styles.main}>
-        <AddItem showForm={showForm} />
+        
+
+        <div class="box">
         <Event showForm={showForm} />
+        </div>
+
+
+        <AddItem showForm={showForm} />
         {isShowingForm ? <AddEvent showForm={showForm} /> : null}
       </main>
 
