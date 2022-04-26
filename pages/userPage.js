@@ -1,6 +1,7 @@
 import Head from "next/head";
 import { useState } from "react";
 import AddEvent from "../components/AddEvent/AddEvent";
+import Event from "../components/Event/event";
 import AddItem from "../components/AddItem/AddItem";
 import styles from "../styles/Home.module.css";
 
@@ -22,6 +23,7 @@ export default function Home() {
 
       <main className={styles.main}>
         <AddItem showForm={showForm} />
+        <Event showForm={showForm} />
         {isShowingForm ? <AddEvent showForm={showForm} /> : null}
       </main>
 
