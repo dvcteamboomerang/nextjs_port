@@ -3,9 +3,11 @@ import { useState } from "react";
 import AddEvent from "../components/AddEvent/AddEvent";
 import AddItem from "../components/AddItem/AddItem";
 import styles from "../styles/Home.module.css";
-
+import ProfileImage from "../components/ProfileImage/ProfileImage";
+import { getLatestEvents } from "../scripts/common/API";
 export default function Home() {
   const [isShowingForm, showForm] = useState(false);
+  getLatestEvents(5).then((data) => console.log(data));
   return (
     <div className={styles.container}>
       <Head>
@@ -21,6 +23,11 @@ export default function Home() {
       </Head>
 
       <main className={styles.main}>
+        <ProfileImage
+          img_link={
+            "https://lh3.googleusercontent.com/a-/AOh14GgXbTMhbqFLJlh-0L3vkm9uLTAGjwI5ZMgwzrtEAw=s96-c"
+          }
+        />
         <AddItem showForm={showForm} />
         {isShowingForm ? <AddEvent showForm={showForm} /> : null}
       </main>

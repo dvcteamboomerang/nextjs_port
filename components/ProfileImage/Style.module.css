@@ -1,0 +1,13 @@
+.profile_image {
+  height: 15rem;
+  width: 15rem;
+}
+.container {
+  display: flex;
+}
+.descriptionContainer {
+  height: 15rem;
+  width: 25rem;
+  display: flex;
+  background-color: green;
+}

@@ -5,11 +5,17 @@ const Form = ({ fields }) => {
   const [{ is_read, message_status }, use_state] = useState({
     is_read: 0,
   });
-  const Fields = Object.entries(fields).map(([field_name, field_attribute]) => {
-    return (
-      <Field title={field_name} textarea={field_attribute.textarea ?? false} />
-    );
-  });
+  const Fields = Object.entries(fields).map(
+    ([fieldName, fieldAttribute], i) => {
+      return (
+        <Field
+          title={fieldName}
+          key={fieldName + i}
+          textarea={fieldAttribute.textarea ?? false}
+        />
+      );
+    }
+  );
   useEffect(() => {
     if (is_read) {
       const composite_text = Array.from(
@@ -41,7 +47,6 @@ const Form = ({ fields }) => {
 };
 
 const Field = ({ title, textarea }) => {
-  console.log(title, textarea);
   return (
     <div>
       <h2>{title}</h2>
