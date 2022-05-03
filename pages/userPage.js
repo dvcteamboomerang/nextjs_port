@@ -1,7 +1,7 @@
 import Head from "next/head";
 import { useState } from "react";
 import AddEvent from "../components/AddEvent/AddEvent";
-import Event from "../components/Event/Event";
+import Event from "../components/EventPost/Event";
 import AddItem from "../components/AddItem/AddItem";
 import styles from "../styles/Home.module.css";
 import { getLatestEvents } from "../scripts/common/API";
