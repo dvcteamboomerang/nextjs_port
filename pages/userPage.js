@@ -57,7 +57,37 @@ export default function Home({ posts }) {
 const EventsSection = ({ Events }) => {
   return (
     <>
-      <h1>Events</h1>
+      <div
+        style={{
+          backgroundImage:
+            'url("https://images.unsplash.com/photo-1559135197-8a45ea74d367?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2148&q=80")',
+        }}
+      >
+        <h1
+          style={{
+            width: "100vw",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            fontSize: "4rem",
+            margin: 0,
+            padding: "1.7rem 0rem",
+            fontWeight: "800",
+            color: "white",
+            backdropFilter: "blur(5px)",
+          }}
+        >
+          Events
+        </h1>
+        <div
+          style={{
+            width: "100%",
+            height: "100%",
+            position: "absolute",
+          }}
+        />
+      </div>
+
       <div
         style={{
           overflowX: "auto",
@@ -75,7 +105,7 @@ const EventsSection = ({ Events }) => {
 export async function getServerSideProps() {
   // Call an external API endpoint to get posts.
   // You can use any data fetching library
-  const posts = await getLatestEvents(5);
+  const posts = await getLatestEvents(10);
 
   // By returning { props: { posts } }, the Blog component
   // will receive `posts` as a prop at build time
