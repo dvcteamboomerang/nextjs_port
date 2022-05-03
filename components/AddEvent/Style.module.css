@@ -59,3 +59,10 @@
 .formType:hover {
   opacity: 0.5;
 }
+@media only screen and (max-width: 500px) {
+  .createItem {
+    height: 100vh;
+    width: 100vw;
+    top: 0px;
+  }
+}
