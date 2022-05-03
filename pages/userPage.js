@@ -65,7 +65,7 @@ const EventsSection = ({ Events }) => {
   );
 };
 
-export async function getStaticProps() {
+export async function getServerSideProps() {
   // Call an external API endpoint to get posts.
   // You can use any data fetching library
   const posts = await getLatestEvents(5);
