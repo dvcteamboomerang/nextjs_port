@@ -12,9 +12,9 @@ const EventPost = ({
 
   order,
 }) => {
-  const Tags = tags.map((tag) => {
+  const Tags = tags.map((tag, i) => {
     const random_tag_color = Math.random() * 360;
-    return <p>#{tag}</p>;
+    return <p key={"par" + i}>#{tag}</p>;
   });
   return (
     <div
