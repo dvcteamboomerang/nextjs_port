@@ -23,7 +23,7 @@ export async function signUp(email, password) {
     let response = fetch(
       `${
         process.env.NODE_ENV === "production"
-          ? "https://dvcteamboomerang.vercel.app"
+          ? "https://dvcboomerang.vercel.app"
           : "http://localhost:3000"
       }/api/newUser`,
       {
@@ -49,7 +49,7 @@ export async function signInWithGoogle() {
   let response = fetch(
     `${
       process.env.NODE_ENV === "production"
-        ? "https://dvcteamboomerang.vercel.app"
+        ? "https://dvcboomerang.vercel.app"
         : "http://localhost:3000"
     }/api/newUser`,
     {
@@ -183,7 +183,7 @@ export async function getLatestEvents(limit) {
   let response = await fetch(
     `${
       process.env.NODE_ENV === "production"
-        ? "https://dvcteamboomerang.vercel.app"
+        ? "https://dvcboomerang.vercel.app"
         : "http://localhost:3000"
     }/api/getEvents`,
     {
