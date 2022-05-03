@@ -5,6 +5,7 @@ import Event from "../components/EventPost/Event";
 import AddItem from "../components/AddItem/AddItem";
 import styles from "../styles/Home.module.css";
 import { getLatestEvents } from "../scripts/common/API";
+import { border, borderRadius } from "@mui/system";
 export default function Home({ posts }) {
   const [isShowingForm, showForm] = useState(false);
   let Events;
@@ -63,6 +64,8 @@ const EventsSection = ({ Events }) => {
           overflowX: "auto",
           width: "100vw",
           display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
           flexDirection: "row",
         }}
       >

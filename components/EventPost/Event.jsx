@@ -11,7 +11,7 @@ function FeaturedPost(props) {
   const { title, description, img_link, author, date } = props;
   console.log(props);
   return (
-    <CardActionArea component="a" href="#">
+    <CardActionArea component="a" href="#" sx={{width: "15rem", borderRadius: "10px", overflow: "hidden"}}>
       <Card sx={{ width: "15rem", height: "20rem" }}>
         <CardMedia
           component="img"
