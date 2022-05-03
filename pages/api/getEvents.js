@@ -15,6 +15,7 @@ export default async function handler(req, res) {
       .toArray();
     if (queryResults.length) {
       // return the posts
+      console.log(queryResults);
       return res.json({
         message: "Post added successfully",
         success: true,

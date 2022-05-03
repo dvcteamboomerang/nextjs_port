@@ -195,5 +195,6 @@ export async function getLatestEvents(limit) {
       body: JSON.stringify({ limit: limit }),
     }
   ).then((res) => res.json());
+  console.log(response);
   return response;
 }
