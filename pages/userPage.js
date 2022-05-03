@@ -1,6 +1,7 @@
 import Head from "next/head";
 import { useState } from "react";
 import AddEvent from "../components/AddEvent/AddEvent";
+import Event from "../components/Event/event";
 import AddItem from "../components/AddItem/AddItem";
 import styles from "../styles/Home.module.css";
 import ProfileImage from "../components/ProfileImage/ProfileImage";
@@ -23,11 +24,10 @@ export default function Home() {
       </Head>
 
       <main className={styles.main}>
-        <ProfileImage
-          img_link={
-            "https://lh3.googleusercontent.com/a-/AOh14GgXbTMhbqFLJlh-0L3vkm9uLTAGjwI5ZMgwzrtEAw=s96-c"
-          }
-        />
+        <div class="box">
+          <Event showForm={showForm} />
+        </div>
+
         <AddItem showForm={showForm} />
         {isShowingForm ? <AddEvent showForm={showForm} /> : null}
       </main>
