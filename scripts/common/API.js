@@ -20,14 +20,21 @@ export async function signUp(email, password) {
   const { user, error } = status;
   if (user) {
     const { uid, accessToken } = user;
-    let response = fetch("http://localhost:3000/api/newUser", {
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-      },
-      method: "POST",
-      body: JSON.stringify({ uid: uid }),
-    }).then((res) => res.json());
+    let response = fetch(
+      `${
+        process.env.NODE_ENV === "production"
+          ? "dvcteamboomerang.vercel.app"
+          : "http://localhost:3000"
+      }/api/newUser`,
+      {
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+        method: "POST",
+        body: JSON.stringify({ uid: uid }),
+      }
+    ).then((res) => res.json());
   } else if (error) {
     return status;
   }
@@ -39,14 +46,21 @@ export async function signInWithGoogle() {
   const status = await signInGoogleWithFirebase();
   const { user } = status;
   const { uid, accessToken } = user;
-  let response = fetch("http://localhost:3000/api/newUser", {
-    headers: {
-      Accept: "application/json",
-      "Content-Type": "application/json",
-    },
-    method: "POST",
-    body: JSON.stringify({ uid: uid }),
-  }).then((res) => res.json());
+  let response = fetch(
+    `${
+      process.env.NODE_ENV === "production"
+        ? "dvcteamboomerang.vercel.app"
+        : "http://localhost:3000"
+    }/api/newUser`,
+    {
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+      method: "POST",
+      body: JSON.stringify({ uid: uid }),
+    }
+  ).then((res) => res.json());
   console.log(response);
   if (response.success) return status;
   else return { error: "Technical issue DB01" };
@@ -166,13 +180,20 @@ export async function getUserInfo() {
 }
 
 export async function getLatestEvents(limit) {
-  let response = await fetch("http://localhost:3000/api/getEvents", {
-    headers: {
-      Accept: "application/json",
-      "Content-Type": "application/json",
-    },
-    method: "POST",
-    body: JSON.stringify({ limit: limit }),
-  }).then((res) => res.json());
+  let response = await fetch(
+    `${
+      process.env.NODE_ENV === "production"
+        ? "dvcteamboomerang.vercel.app"
+        : "http://localhost:3000"
+    }/api/getEvents`,
+    {
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+      method: "POST",
+      body: JSON.stringify({ limit: limit }),
+    }
+  ).then((res) => res.json());
   return response;
 }
