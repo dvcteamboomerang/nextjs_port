@@ -1,8 +1,8 @@
 .addItem {
   background-color: green;
   font-size: 5rem;
-  height: 5rem;
-  width: 5rem;
+  height: 4rem;
+  width: 4rem;
   padding: 0;
   padding-bottom: 0.5rem;
   margin: 0;
@@ -14,8 +14,8 @@
   border-radius: 100%;
   cursor: pointer;
   position: fixed;
-  right: 4rem;
-  bottom: 4rem;
+  right: 3rem;
+  bottom: 3rem;
   opacity: 1;
   z-index: 4;
 }

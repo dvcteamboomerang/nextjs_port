@@ -39,3 +39,20 @@ a {
 .theme_background {
   background-color: rgb(12, 134, 15);
 }
+/* width */
+::-webkit-scrollbar {
+  width: 0.5rem;
+  height: 0.5rem;
+  background-color: rgba(0, 0, 0, 0.2);
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  border-radius: 10px;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: rgb(53, 53, 53);
+  border-radius: 10px;
+}

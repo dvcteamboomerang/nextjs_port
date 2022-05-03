@@ -6,63 +6,58 @@ import Card from "@mui/material/Card";
 import CardActionArea from "@mui/material/CardActionArea";
 import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";
+import { CardActions } from "@mui/material";
 function FeaturedPost(props) {
   const { title, description, img_link, author, date } = props;
   console.log(props);
   return (
-    <Grid item xs={12} md={6}>
-      <CardActionArea component="a" href="#">
-        <Card sx={{ display: "flex" }}>
-          <CardContent sx={{ flex: 1 }}>
-            <div
-              style={{
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-              }}
-            >
-              {img_link ? (
-                <img
-                  src={img_link}
-                  style={{
-                    height: "8rem",
-                    width: "8rem",
-                    borderRadius: "15px",
-                  }}
-                />
-              ) : null}
-            </div>
-            <Typography component="h2" variant="h5">
-              {title}
-            </Typography>
-            <Typography variant="subtitle1" color="text.secondary"></Typography>
-            <Typography variant="subtitle1" paragraph>
-              {description}
-            </Typography>
-            <Typography variant="subtitle1" paragraph>
-              {author}
-            </Typography>
-            <Typography variant="subtitle1" paragraph>
-              {new Date(date).toLocaleDateString("en-us", {
-                weekday: "long",
-                year: "numeric",
-                month: "short",
-                day: "numeric",
-              })}
-            </Typography>
-            <Typography variant="subtitle1" color="primary">
-              Join!
-            </Typography>
-          </CardContent>
-          <CardMedia
-          // component="img"
-          // sx={{ width: 160, display: { xs: 'none', sm: 'block' } }}
-          // image={post.image}
-          // alt={post.imageLabel}
-          />
-        </Card>
-      </CardActionArea>
-    </Grid>
+    <CardActionArea component="a" href="#">
+      <Card sx={{ width: "15rem", height: "20rem" }}>
+        <CardMedia
+          component="img"
+          alt="green iguana"
+          height="100%"
+          image={img_link}
+        />
+        <CardMedia
+          component="img"
+          alt="green iguana"
+          image={img_link}
+          sx={{
+            top: 0,
+            position: "absolute",
+            width: "100%",
+            height: "68%",
+          }}
+        />
+        <CardContent
+          sx={{
+            flex: 1,
+            position: "absolute",
+            bottom: 0,
+            color: "white",
+            backdropFilter: "blur(7px) brightness(40%)",
+            width: "100%",
+            height: "32%",
+          }}
+        >
+          <Typography variant="h5" component="div" sx={{ fontSize: "1rem" }}>
+            {title}
+          </Typography>
+          <p style={{ fontSize: "0.7rem", margin: 0, marginLeft: "auto" }}>
+            {author}
+          </p>
+          <Typography sx={{ fontSize: "0.7rem" }} variant="subtitle1">
+            {new Date(date).toLocaleDateString("en-us", {
+              weekday: "long",
+              year: "numeric",
+              month: "short",
+              day: "numeric",
+            })}
+          </Typography>
+        </CardContent>
+      </Card>
+    </CardActionArea>
   );
 }
 

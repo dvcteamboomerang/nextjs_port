@@ -58,7 +58,14 @@ const EventsSection = ({ Events }) => {
   return (
     <>
       <h1>Events</h1>
-      <div style={{ display: "flex", flexDirection: "row", gap: "2rem" }}>
+      <div
+        style={{
+          overflowX: "auto",
+          width: "100vw",
+          display: "flex",
+          flexDirection: "row",
+        }}
+      >
         {Events}
       </div>
     </>
