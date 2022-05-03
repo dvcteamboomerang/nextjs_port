@@ -153,9 +153,11 @@ const submit_format = async (
   );
   if (!should_block)
     fetch(
-      `http://localhost:3000/api/${
-        type === "Event" ? "newEvent" : "newMarketPlaceItem"
-      }`,
+      `${
+        process.env.NODE_ENV === "production"
+          ? "https://dvcboomerang.vercel.app"
+          : "http://localhost:3000"
+      }/api/${type === "Event" ? "newEvent" : "newMarketPlaceItem"}`,
       {
         headers: {
           Accept: "application/json",
