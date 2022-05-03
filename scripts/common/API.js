@@ -11,6 +11,7 @@ const {
   isLoggedInFirebase,
   signOutFirebase,
   getCurrentFirebaseUser,
+  getAuthorNameFirebase,
 } = AuthService;
 
 export async function signUp(email, password) {

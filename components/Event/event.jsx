@@ -1,39 +1,64 @@
-import * as React from 'react';
-import PropTypes from 'prop-types';
-import Typography from '@mui/material/Typography';
-import Grid from '@mui/material/Grid';
-import Card from '@mui/material/Card';
-import CardActionArea from '@mui/material/CardActionArea';
-import CardContent from '@mui/material/CardContent';
-import CardMedia from '@mui/material/CardMedia';
-
-
+import * as React from "react";
+import PropTypes from "prop-types";
+import Typography from "@mui/material/Typography";
+import Grid from "@mui/material/Grid";
+import Card from "@mui/material/Card";
+import CardActionArea from "@mui/material/CardActionArea";
+import CardContent from "@mui/material/CardContent";
+import CardMedia from "@mui/material/CardMedia";
 function FeaturedPost(props) {
-  const { post } = props;
-
+  const { title, description, img_link, author, date } = props;
+  console.log(props);
   return (
     <Grid item xs={12} md={6}>
       <CardActionArea component="a" href="#">
-        <Card sx={{ display: 'flex' }}>
+        <Card sx={{ display: "flex" }}>
           <CardContent sx={{ flex: 1 }}>
+            <div
+              style={{
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+              }}
+            >
+              {img_link ? (
+                <img
+                  src={img_link}
+                  style={{
+                    height: "8rem",
+                    width: "8rem",
+                    borderRadius: "15px",
+                  }}
+                />
+              ) : null}
+            </div>
             <Typography component="h2" variant="h5">
-              title
+              {title}
             </Typography>
-            <Typography variant="subtitle1" color="text.secondary">
-              4/20
+            <Typography variant="subtitle1" color="text.secondary"></Typography>
+            <Typography variant="subtitle1" paragraph>
+              {description}
             </Typography>
             <Typography variant="subtitle1" paragraph>
-              desc
+              {author}
+            </Typography>
+            <Typography variant="subtitle1" paragraph>
+              {new Date(date).toLocaleDateString("en-us", {
+                weekday: "long",
+                year: "numeric",
+                month: "short",
+                day: "numeric",
+              })}
             </Typography>
             <Typography variant="subtitle1" color="primary">
-              Continue reading...
+              Join!
             </Typography>
           </CardContent>
           <CardMedia
-            // component="img"
-            // sx={{ width: 160, display: { xs: 'none', sm: 'block' } }}
-            // image={post.image}
-            // alt={post.imageLabel}
+          // component="img"
+          // sx={{ width: 160, display: { xs: 'none', sm: 'block' } }}
+          // image={post.image}
+          // alt={post.imageLabel}
           />
         </Card>
       </CardActionArea>

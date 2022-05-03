@@ -1,14 +1,32 @@
 import Head from "next/head";
 import { useState } from "react";
 import AddEvent from "../components/AddEvent/AddEvent";
-import Event from "../components/Event/event";
+import Event from "../components/Event/Event";
 import AddItem from "../components/AddItem/AddItem";
 import styles from "../styles/Home.module.css";
-import ProfileImage from "../components/ProfileImage/ProfileImage";
 import { getLatestEvents } from "../scripts/common/API";
-export default function Home() {
+export default function Home({ posts }) {
   const [isShowingForm, showForm] = useState(false);
-  getLatestEvents(5).then((data) => console.log(data));
+  let Events;
+  if (posts.data) {
+    Events = posts.data.map(
+      ({ title, description, img_link, author, options }) => {
+        return (
+          <Event
+            title={title}
+            description={description}
+            img_link={
+              img_link
+                ? img_link
+                : "https://lugoldedc.com/wp-content/uploads/2020/10/dvc-logo.png"
+            }
+            author={author}
+            date={options}
+          />
+        );
+      }
+    );
+  }
   return (
     <div className={styles.container}>
       <Head>
@@ -24,9 +42,7 @@ export default function Home() {
       </Head>
 
       <main className={styles.main}>
-        <div class="box">
-          <Event showForm={showForm} />
-        </div>
+        <EventsSection Events={Events} />
 
         <AddItem showForm={showForm} />
         {isShowingForm ? <AddEvent showForm={showForm} /> : null}
@@ -35,4 +51,29 @@ export default function Home() {
       <footer className={styles.footer}></footer>
     </div>
   );
+}
+
+const EventsSection = ({ Events }) => {
+  return (
+    <>
+      <h1>Events</h1>
+      <div style={{ display: "flex", flexDirection: "row", gap: "2rem" }}>
+        {Events}
+      </div>
+    </>
+  );
+};
+
+export async function getStaticProps() {
+  // Call an external API endpoint to get posts.
+  // You can use any data fetching library
+  const posts = await getLatestEvents(5);
+
+  // By returning { props: { posts } }, the Blog component
+  // will receive `posts` as a prop at build time
+  return {
+    props: {
+      posts: posts,
+    },
+  };
 }

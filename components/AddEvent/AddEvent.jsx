@@ -16,7 +16,7 @@ const darkTheme = createTheme({
   },
 });
 const CreateItem = ({ showForm }) => {
-  const [date, setDate] = useState(new Date("2014-08-18T21:11:54"));
+  const [date, setDate] = useState(new Date());
   const [formType, setFormType] = useState("Event");
   const [submission, submit] = useState(null);
   const [alert, setAlert] = useState(null);
@@ -56,6 +56,7 @@ const CreateItem = ({ showForm }) => {
           {formType == "Event" ? (
             <Form
               fields={{
+                "Event Image Link": {},
                 "Event Name": {},
                 "Event Description": { textarea: true },
               }}
@@ -99,11 +100,21 @@ const CreateItem = ({ showForm }) => {
               const description = document.getElementById(
                 `${formType} Description`
               ).value;
+              const img_link = document.getElementById(
+                `${formType} Image Link`
+              ).value;
               const options =
                 formType === "Event"
                   ? date
                   : document.getElementById("Cost").value;
-              submit_format(formType, name, description, options, setAlert);
+              submit_format(
+                formType,
+                name,
+                description,
+                options,
+                setAlert,
+                img_link
+              );
             }}
             style={{ marginTop: "2rem", color: "white", borderColor: "white" }}
           >
@@ -115,16 +126,25 @@ const CreateItem = ({ showForm }) => {
   );
 };
 //move to API.js
-const submit_format = async (type, name, description, options, setAlert) => {
+const submit_format = async (
+  type,
+  title,
+  description,
+  options,
+  setAlert,
+  img_link
+) => {
   const data = {
     type: type,
-    name: name,
+    title: title,
+    img_link: img_link,
     description: description,
     options: options,
-    author: (await getCurrentUser()).uid,
+    author: (await getCurrentUser()).displayName,
+    attendees: [],
   };
   console.log(data.author);
-  const composite_string = name + " " + description;
+  const composite_string = title + " " + description;
   setAlert("Reading content... Checking for no no's.");
 
   const should_block = await is_sensitive(composite_string);
